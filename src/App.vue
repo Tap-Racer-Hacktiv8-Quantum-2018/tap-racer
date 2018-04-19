@@ -1,5 +1,11 @@
 <template>
   <div id="app">
+    <div id="nav">
+      <router-link to="/">Home</router-link> |
+      <router-link to="/room">Room</router-link> |
+      <router-link to="/loby">Loby</router-link> |
+      <router-link to="/game">Game</router-link>
+    </div>
     <router-view/>
   </div>
 </template>
@@ -11,9 +17,9 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  display: flex;
+  /* display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: center; */
 }
 #nav {
   padding: 30px;
