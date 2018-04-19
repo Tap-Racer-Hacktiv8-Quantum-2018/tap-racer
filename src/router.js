@@ -4,6 +4,8 @@ import Home from './views/Home.vue'
 import Loby from './views/Loby.vue'
 import Game from './views/Game.vue'
 import Room from './views/Room.vue'
+import Index from './views/Index.vue'
+import Board from './views/Board.vue'
 
 Vue.use(Router)
 
@@ -11,8 +13,8 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'home',
-      component: Home
+      name: 'index',
+      component: Index
     },
     {
       path: '/loby/:id',
@@ -28,6 +30,11 @@ export default new Router({
       path: '/room',
       name: 'room',
       component: Room
+    },
+    {
+      path: '/board',
+      name: 'board',
+      component: Board
     }
   ]
 })
