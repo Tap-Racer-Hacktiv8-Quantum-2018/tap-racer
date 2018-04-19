@@ -35,6 +35,21 @@ export default new Router({
       path: '/board',
       name: 'board',
       component: Board
+    },
+    {
+      path: '/loby/:id',
+      name: 'loby', 
+      component: Loby
+    },
+    {
+      path: '/game',
+      name: 'game',
+      component: Game
+    },
+    {
+      path: '/room',
+      name: 'room',
+      component: Room
     }
   ]
 })
