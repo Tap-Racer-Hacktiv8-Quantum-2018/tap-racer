@@ -21,13 +21,23 @@ export default new Vuex.Store({
     rooms: []
   },
   mutations: {
-    addUser: function(state, payload) {
+    addUser: function (state, payload) {
       state.users.push(payload)
     },
-    addRoom: function(state, payload) {
+    addRoom: function (state, payload) {
       state.rooms.push(payload)
+    },
+    getUser: function (state, payload) {
+      // users.on('value', function (snapshot) {
+      // })
+      state.users = payload
     }
   },
   actions: {
+    getUser: function (context) {
+      users.on('value', function (snapshot) {
+        context.commit('getUser', snapshot.val())
+      })
+    }
   }
 })
