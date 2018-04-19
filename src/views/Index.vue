@@ -10,7 +10,7 @@
           <input type="text" v-model="username" placeholder="Username">
           <input type="password" v-model="password" placeholder="Password">
         </div>
-        <button type="button" class="btn btn-link">Login</button>
+        <button type="button" class="btn btn-link" @click="login">Login</button>
 
         <!-- Button trigger modal -->
         <button type="button" class="btn btn-link" data-toggle="modal" data-target="#exampleModalCenter">
@@ -34,7 +34,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" @click="signup">Register</button>
             </div>
           </div>
         </div>
@@ -46,6 +46,10 @@
 </template>
 
 <script>
+import {db} from '../firebase'
+import swal from 'sweetalert2'
+const users = db.ref('users')
+
 export default {
   name: 'index',
   data: function () {
@@ -53,6 +57,88 @@ export default {
       username: '',
       password: '',
       confirm: ''
+    }
+  },
+  firebase: function () {
+    return {
+      dataUser: users
+    }
+  },
+  created: function () {
+    this.$store.dispatch('getUser')
+    // this.$store.commit('getUser')
+  },
+  methods: {
+    signup: function () {
+      let newUser = {
+        username: this.username,
+        password: this.password,
+        win: 0,
+        lose: 0,
+        status: 'inactive'
+      }
+      console.log(this.dataUser)
+      let check = false
+      this.dataUser.forEach(value => {
+        if (value.username === newUser.username) {
+          console.log('username exist')
+          check = true
+        }
+      })
+      console.log('check ===', check)
+      if (check === false) {
+        users.push(newUser).then(response => {
+          console.log('signup===', response)
+          this.$store.commit('addUser', newUser)
+        })
+      } else {
+        swal({
+          type: 'error',
+          title: 'Oops...',
+          text: 'Username already exist!'
+        })
+      }
+    },
+    login: function () {
+      let userLogin = {
+        username: this.username,
+        password: this.password
+      }
+      let check = false
+      let id = ''
+      this.dataUser.forEach(value => {
+        if (value.username === userLogin.username && value.password === userLogin.password) {
+          console.log('masuk login', value['.key'])
+          check = true
+          id = value['.key']
+          // swal(
+          //   'Welcome!',
+          //   'Login success!',
+          //   'success'
+          // )
+          // localStorage.setItem('username', this.username)
+          // this.$router.push({name: 'board'})
+        }
+      })
+      console.log('check==', check)
+      if (check === true) {
+        swal(
+          'Welcome!',
+          'Login success!',
+          'success'
+        )
+        users.child(id).update({
+          status: 'active'
+        })
+        localStorage.setItem('username', this.username)
+        this.$router.push({name: 'board'})
+      } else {
+        swal({
+          type: 'error',
+          title: 'Oops...',
+          text: 'Username/password is wrong!'
+        })
+      }
     }
   }
 }
