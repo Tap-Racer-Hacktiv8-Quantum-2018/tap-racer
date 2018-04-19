@@ -38,7 +38,7 @@ export default new Router({
     },
     {
       path: '/loby/:id',
-      name: 'loby',
+      name: 'loby', 
       component: Loby
     },
     {
