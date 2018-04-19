@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "firebase": "^4.12.1",
+    "sweetalert2": "^7.19.0",
     "vue": "^2.5.16",
     "vue-router": "^3.0.1",
     "vuefire": "^1.4.5",

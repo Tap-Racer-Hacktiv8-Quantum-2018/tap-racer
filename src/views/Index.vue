@@ -10,7 +10,7 @@
           <input type="text" v-model="username" placeholder="Username">
           <input type="password" v-model="password" placeholder="Password">
         </div>
-        <button type="button" class="btn btn-link">Login</button>
+        <button type="button" class="btn btn-link" @click="login">Login</button>
 
         <!-- Button trigger modal -->
         <button type="button" class="btn btn-link" data-toggle="modal" data-target="#exampleModalCenter">
@@ -34,7 +34,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" @click="signup">Register</button>
             </div>
           </div>
         </div>
@@ -46,6 +46,10 @@
 </template>
 
 <script>
+import {db} from '../firebase'
+import swal from 'sweetalert2'
+const users = db.ref('users')
+
 export default {
   name: 'index',
   data: function () {
@@ -53,6 +57,35 @@ export default {
       username: '',
       password: '',
       confirm: ''
+    }
+  },
+  firebase: function () {
+    return {
+      dataUser: users
+    }
+  },
+  methods: {
+    signup: function () {
+      let newUser = {
+        username: this.username,
+        password: this.password,
+        win: 0,
+        lose: 0
+      }
+      console.log(this.dataUser)
+      this.dataUser.forEach(value => {
+        if (value.username === newUser.username) {
+          swal({
+            type: 'error',
+            title: 'Oops...',
+            text: 'Username already exist!'
+          })
+        } else {
+          users.push(newUser).then(response => {
+            console.log('signup===', response.value)
+          })
+        }
+      })
     }
   }
 }
