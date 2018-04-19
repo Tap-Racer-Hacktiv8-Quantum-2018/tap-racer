@@ -20,6 +20,11 @@ export default new Vuex.Store({
     users: [],
     rooms: []
   },
+  getters: {
+    getUser: function (state) {
+      return state.users
+    }
+  },
   mutations: {
     addUser: function (state, payload) {
       state.users.push(payload)

@@ -26,7 +26,30 @@ export default {
   name: 'board',
   data: function () {
     return {
-      scoreData: []
+      scoreData: [],
+      activeUsers: []
+    }
+  },
+  computed: {
+    getUser: function () {
+      return this.$store.getters.getUser
+    }
+  },
+  created: function () {
+    this.$store.dispatch('getUser')
+    this.loginUser()
+  },
+  methods: {
+    loginUser: function () {
+      console.log('getusergetter==', this.getUser.length)
+      let data = this.$store.state.users
+      for (let value in data) {
+        console.log(value)
+        if (value.status === 'active') {
+          console.log('active=', value)
+          this.activeUsers.push(value)
+        }
+      }
     }
   }
 }

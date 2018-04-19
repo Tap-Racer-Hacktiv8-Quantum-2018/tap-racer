@@ -74,7 +74,8 @@ export default {
         username: this.username,
         password: this.password,
         win: 0,
-        lose: 0
+        lose: 0,
+        status: 'inactive'
       }
       console.log(this.dataUser)
       let check = false
@@ -104,10 +105,12 @@ export default {
         password: this.password
       }
       let check = false
+      let id = ''
       this.dataUser.forEach(value => {
         if (value.username === userLogin.username && value.password === userLogin.password) {
-          console.log('masuk login')
+          console.log('masuk login', value['.key'])
           check = true
+          id = value['.key']
           // swal(
           //   'Welcome!',
           //   'Login success!',
@@ -124,6 +127,9 @@ export default {
           'Login success!',
           'success'
         )
+        users.child(id).update({
+          status: 'active'
+        })
         localStorage.setItem('username', this.username)
         this.$router.push({name: 'board'})
       } else {
