@@ -39,31 +39,55 @@ export default {
   },
   methods: {
     tapButton: function () {
+      this.score++
       this.color += 5
       const user = localStorage.getItem('username')
-      
-      console.log(this.activeRoom.players.player2.clicked)
-      const editRoom = {...this.activeRoom}
-      delete editRoom['.key']
-      roomsRef.child(this.activeRoom['.key']).set(editRoom)
+      console.log("target", this.activeRoom.target)
       if (this.activeRoom.winner !== '') {
         alert(`Game is over! the winner is ${this.activeRoom.winner}`)
         this.$router.push( '/room' );
-      } else if (this.activeRoom.players.player1.clicked >= this.activeRoom.target) {
-        alert(`${this.activeRoom.players.player1.username} win`)
-        this.activeRoom.winner = this.activeRoom.players.player1.username
-      } else if (this.activeRoom.players.player2.clicked >= this.activeRoom.target) {
-        alert(`${this.activeRoom.players.player2.username} win`)
-        this.activeRoom.winner = this.activeRoom.players.player2.username
-      } else {
-        if (this.activeRoom.players.player1.username === user) {
-          this.activeRoom.players.player1.clicked++
-          this.score = this.activeRoom.players.player1.clicked
-        } else if (this.activeRoom.players.player2.username === user) {
-          this.activeRoom.players.player2.clicked++
-          this.score = this.activeRoom.players.player2.clicked
+      } else if (this.activeRoom.players.player1.username === user) {
+        if(this.activeRoom.target == this.score) {
+          this.activeRoom.winner = this.activeRoom.players.player1.username
+          const editRoom = {...this.activeRoom}
+          delete editRoom['.key']
+          roomsRef.child(this.activeRoom['.key']).set(editRoom)
+          alert(`Game is over! the winner is ${this.activeRoom.winner}`)
+          this.$router.push( '/room' );
+        }
+      } else if (this.activeRoom.players.player2.username === user) {
+        if(this.activeRoom.target == this.score) {
+          this.activeRoom.winner = this.activeRoom.players.player2.username
+          const editRoom = {...this.activeRoom}
+          delete editRoom['.key']
+          roomsRef.child(this.activeRoom['.key']).set(editRoom)
+          alert(`Game is over! the winner is ${this.activeRoom.winner}`)
+          this.$router.push( '/room' );
         }
       }
+
+      // console.log(this.activeRoom.players.player2.clicked)
+      // const editRoom = {...this.activeRoom}
+      // delete editRoom['.key']
+      // roomsRef.child(this.activeRoom['.key']).set(editRoom)
+      // if (this.activeRoom.winner !== '') {
+      //   alert(`Game is over! the winner is ${this.activeRoom.winner}`)
+      //   this.$router.push( '/room' );
+      // } else if (this.activeRoom.players.player1.clicked >= this.activeRoom.target) {
+      //   alert(`${this.activeRoom.players.player1.username} win`)
+      //   this.activeRoom.winner = this.activeRoom.players.player1.username
+      // } else if (this.activeRoom.players.player2.clicked >= this.activeRoom.target) {
+      //   alert(`${this.activeRoom.players.player2.username} win`)
+      //   this.activeRoom.winner = this.activeRoom.players.player2.username
+      // } else {
+      //   if (this.activeRoom.players.player1.username === user) {
+      //     this.activeRoom.players.player1.clicked++
+      //     this.score = this.activeRoom.players.player1.clicked
+      //   } else if (this.activeRoom.players.player2.username === user) {
+      //     this.activeRoom.players.player2.clicked++
+      //     this.score = this.activeRoom.players.player2.clicked
+      //   }
+      // }
     }
   },
   computed: {

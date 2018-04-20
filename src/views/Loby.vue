@@ -61,6 +61,13 @@ export default {
             alert(`Wait for another player to ready`)
             this.$router.push( '/loby/' + this.id );
           }
+
+          if(room.players.player1.isReady === 1 || room.players.player2.isReady === 1) {
+            room.status = "war"
+            const editRoom = {...room}
+            delete editRoom['.key']
+            roomsRef.child(room['.key']).set(editRoom)
+          }
         }
       })
     },
@@ -78,6 +85,8 @@ export default {
   },
   components: {
     // StartButton
+  },
+  watch: {
   }
 }
 </script>
