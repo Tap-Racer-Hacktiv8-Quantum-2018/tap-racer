@@ -65,29 +65,6 @@ export default {
           this.$router.push( '/room' );
         }
       }
-
-      // console.log(this.activeRoom.players.player2.clicked)
-      // const editRoom = {...this.activeRoom}
-      // delete editRoom['.key']
-      // roomsRef.child(this.activeRoom['.key']).set(editRoom)
-      // if (this.activeRoom.winner !== '') {
-      //   alert(`Game is over! the winner is ${this.activeRoom.winner}`)
-      //   this.$router.push( '/room' );
-      // } else if (this.activeRoom.players.player1.clicked >= this.activeRoom.target) {
-      //   alert(`${this.activeRoom.players.player1.username} win`)
-      //   this.activeRoom.winner = this.activeRoom.players.player1.username
-      // } else if (this.activeRoom.players.player2.clicked >= this.activeRoom.target) {
-      //   alert(`${this.activeRoom.players.player2.username} win`)
-      //   this.activeRoom.winner = this.activeRoom.players.player2.username
-      // } else {
-      //   if (this.activeRoom.players.player1.username === user) {
-      //     this.activeRoom.players.player1.clicked++
-      //     this.score = this.activeRoom.players.player1.clicked
-      //   } else if (this.activeRoom.players.player2.username === user) {
-      //     this.activeRoom.players.player2.clicked++
-      //     this.score = this.activeRoom.players.player2.clicked
-      //   }
-      // }
     }
   },
   computed: {
@@ -131,7 +108,6 @@ export default {
     text-align: center;
     width: 150px;
     height: 150px;
-    /* background: red; */
     color: white;
   }
 

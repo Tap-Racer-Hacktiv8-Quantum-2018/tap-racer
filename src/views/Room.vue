@@ -13,8 +13,8 @@
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
               </div>
               <div class="modal-body">
-                <input type="text" placeholder="room name" class="form-control" v-model="newRoom.name">
-                <input type="text" placeholder="target" class="form-control" v-model="newRoom.target">
+                <input type="text" placeholder="Room Name" class="form-control" v-model="newRoom.name">
+                <input type="text" placeholder="Target To Win!" class="form-control" v-model="newRoom.target">
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -137,17 +137,17 @@ export default {
       const user = localStorage.getItem('username')
       if (room.players.player1.username === user ||
         room.players.player2.username === user) {
-        return true;
+        return true
       } else if (room.players.player2.username !== '') {
         alert('Room full')
-        this.$router.push( '/room' );
-        return false;
+        this.$router.push('/room')
+        return false
       } else {
         room.players.player2.username = user
         const editRoom = {...room}
         delete editRoom['.key']
         roomsRef.child(room['.key']).set(editRoom)
-        return true;
+        return true
       }
     }
   }
