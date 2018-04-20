@@ -24,7 +24,7 @@
           </div>
         </div>
         <!-- <button type="button" class="header right-header btn btn-danger" @click="logOut">Log Out</button> -->
-        <h2 class="right-header">Hi, Jono</h2>
+        <h2 class="right-header">Hi, {{name}}</h2>
       </div>
       <div class="row">
         <div class="roomlist col-md-9 col-12" >
@@ -120,6 +120,7 @@ export default {
     }
   },
   created: function () {
+    this.name = localStorage.getItem('username')
     this.$store.dispatch('getUser')
     this.$store.dispatch('getActiveUser')
   },

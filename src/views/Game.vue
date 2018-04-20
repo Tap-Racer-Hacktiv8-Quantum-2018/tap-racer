@@ -63,6 +63,7 @@ export default {
 
       if (this.activeRoom.winner !== '') {
         alert(`Game is over! the winner is ${this.activeRoom.winner}`)
+        this.$router.push({name: 'room'})
       }
     }
   },
@@ -107,7 +108,6 @@ export default {
     text-align: center;
     width: 150px;
     height: 150px;
-    /* background: red; */
     color: white;
   }
 
