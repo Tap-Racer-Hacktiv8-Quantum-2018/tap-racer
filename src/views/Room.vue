@@ -39,6 +39,7 @@
           </div>
         </div>
       </div>
+      <button type="button" class="right-header btn btn-danger" @click="logOut">Log Out</button>
       <h2 class="right-header">hi, jono</h2>
     </div>
     <div class="row">
@@ -166,6 +167,27 @@ export default {
         delete editRoom['.key']
         roomsRef.child(room['.key']).set(editRoom)
       }
+    },
+    logOut: function () {
+      let username = localStorage.getItem('username')
+      let check = false
+      let dataUser = ''
+      this.users.forEach(value => {
+        if (value.username === username) {
+          console.log('username exist')
+          check = true
+          dataUser = value
+        }
+      })
+      console.log('user fo logout==', dataUser)
+      if (check === true) {
+        users.child(dataUser['.key']).update({
+          status: 'inactive'
+        }).then(() => {
+          localStorage.removeItem('username')
+          this.$router.push({name: 'index'})
+        })
+      }
     }
   }
 }
@@ -188,6 +210,8 @@ export default {
   }
   .right-header {
     float: right;
+    margin-left: 20px;
+    margin-right: 20px;
   }
   .room {
   }
