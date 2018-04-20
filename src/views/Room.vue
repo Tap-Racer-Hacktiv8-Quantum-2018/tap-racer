@@ -122,6 +122,7 @@ export default {
         name: '',
         target: '',
         status: 'on',
+        winner: '',
         players: {
           player1: {
             username: localStorage.getItem('username'),
