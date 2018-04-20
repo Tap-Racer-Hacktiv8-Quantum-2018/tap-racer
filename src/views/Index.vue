@@ -34,23 +34,23 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
-            </div>
-            <div class="modal-body">
-                <input type="text" v-model="username" placeholder="Username">
-                <input type="password" v-model="password" placeholder="Password">
-                <input type="password" v-model="confirm" placeholder="Confirm Password">
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" data-dismiss="modal" @click="signup">Register</button>
+              </div>
+              <div class="modal-body">
+                  <input type="text" v-model="username" placeholder="Username">
+                  <input type="password" v-model="password" placeholder="Password">
+                  <input type="password" v-model="confirm" placeholder="Confirm Password">
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-primary" data-dismiss="modal" @click="signup">Register</button>
+              </div>
             </div>
           </div>
         </div>
       </div>
+      <div class="col-1 right"></div>
+      <div class="col-1"></div>
     </div>
-    <div class="col-1 right"></div>
-    <div class="col-1"></div>
-  </div>
   </div>
 </template>
 
