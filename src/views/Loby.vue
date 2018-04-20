@@ -11,9 +11,9 @@
             <th>Player</th>
             <th>Name</th>
           </thead>
-          <tr>
-            <td></td>
-            <td></td>
+          <tr v-for="(room, index) in rooms" v-bind:key="room['.key'], index" @click="joinRoom(room)">
+            <td>Player {{index + 1}}</td>
+            <td>{{room.players.player1.username}}</td>
           </tr>
         </table>
         <div class="container">
@@ -53,6 +53,7 @@ export default {
   },
   created () {
     this.name = localStorage.getItem('username')
+    this.$store.dispatch('getUser')
   },
   mounted () {
     this.getById()
@@ -61,13 +62,14 @@ export default {
     changeStatus: function (room) {
       const user = localStorage.getItem('username')
       this.getById()
-      console.log("change status--", this.id)
+      console.log('test masuk')
+      console.log('change status--', this.id)
       this.rooms.forEach(room => {
         if (room['.key'] === this.id) {
-          console.log("masuk sini", room)
+          console.log('masuk sini', room)
           if (room.players.player1.username === user) {
             room.players.player1.isReady = 1
-            console.log('masuk------------------')
+            console.log('masuk------------------', room.players.player1.username)
             const editRoom = {...room}
             delete editRoom['.key']
             roomsRef.child(room['.key']).set(editRoom)
@@ -78,9 +80,9 @@ export default {
             roomsRef.child(room['.key']).set(editRoom)
           }
 
-          if(room.players.player1.isReady === 0 || room.players.player2.isReady === 0) {
+          if (room.players.player1.isReady === 0 || room.players.player2.isReady === 0) {
             alert(`Wait for another player to ready`)
-            this.$router.push( '/loby/' + this.id );
+            this.$router.push('/loby/' + this.id)
           }
         }
       })
@@ -94,7 +96,7 @@ export default {
           this.activeRoom = room
         }
       })
-      console.log("active room", this.activeRoom)
+      console.log('active room', this.activeRoom)
     }
   },
   components: {

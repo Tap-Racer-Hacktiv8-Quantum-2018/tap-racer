@@ -41,21 +41,19 @@ export default {
     tapButton: function () {
       this.color += 5
       const user = localStorage.getItem('username')
-      
       console.log(this.activeRoom.players.player2.clicked)
       const editRoom = {...this.activeRoom}
       delete editRoom['.key']
       roomsRef.child(this.activeRoom['.key']).set(editRoom)
       if (this.activeRoom.winner !== '') {
         alert(`Game is over! the winner is ${this.activeRoom.winner}`)
-        this.$router.push( '/room' );
+        this.$router.push('/room')
       } else if (this.activeRoom.players.player1.clicked >= this.activeRoom.target) {
         alert(`${this.activeRoom.players.player1.username} win`)
         this.activeRoom.winner = this.activeRoom.players.player1.username
       } else if (this.activeRoom.players.player2.clicked >= this.activeRoom.target) {
         alert(`${this.activeRoom.players.player2.username} win`)
         this.activeRoom.winner = this.activeRoom.players.player2.username
-<<<<<<< HEAD
       } else {
         if (this.activeRoom.players.player1.username === user) {
           this.activeRoom.players.player1.clicked++
@@ -64,13 +62,6 @@ export default {
           this.activeRoom.players.player2.clicked++
           this.score = this.activeRoom.players.player2.clicked
         }
-=======
-      }
-
-      if (this.activeRoom.winner !== '') {
-        alert(`Game is over! the winner is ${this.activeRoom.winner}`)
-        this.$router.push({name: 'room'})
->>>>>>> 149d1b130d0433da8554d9be90af442386fdd6ad
       }
     }
   },

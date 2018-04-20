@@ -137,17 +137,17 @@ export default {
       const user = localStorage.getItem('username')
       if (room.players.player1.username === user ||
         room.players.player2.username === user) {
-        return true;
+        return true
       } else if (room.players.player2.username !== '') {
         alert('Room full')
-        this.$router.push( '/room' );
-        return false;
+        this.$router.push('/room')
+        return false
       } else {
         room.players.player2.username = user
         const editRoom = {...room}
         delete editRoom['.key']
         roomsRef.child(room['.key']).set(editRoom)
-        return true;
+        return true
       }
     }
   }
