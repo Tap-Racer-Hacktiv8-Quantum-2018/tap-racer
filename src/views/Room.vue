@@ -1,24 +1,61 @@
 <template>
   <div class="container">
     <div class="headerroom">
-      <h2 class="left-header">Create room</h2>
+      <button class="left-header"  data-toggle="modal" data-target="#modalCreateRoom">Create room</button>
+      <div id="modalCreateRoom" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title" align="left">Create Room</h4>
+            </div>
+            <div class="modal-body">
+              <form class="ivu-form ivu-form-label-right">
+                <div class="form-group">
+                  <label class="form-title">Room Name</label>
+                  <div class="form-group-content">
+                    <div class="">
+                      <i class="validate"></i>
+                      <input type="text" placeholder="room name" class="form-control"
+                      v-model="newRoom.name">
+                      </div>
+                    </div>
+                  </div>
+                <div class="form-group">
+                  <label class="form-title">Target</label>
+                  <div class="form-group-content">
+                    <div class="">
+                      <input placeholder="target" v-model="newRoom.target">
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <button class="btn btn-primary" @click="addRoom" data-dismiss="modal">Save</button>
+            </div>
+          </div>
+        </div>
+      </div>
       <h2 class="right-header">hi, jono</h2>
     </div>
     <div class="row">
       <div class="col-md-9 col-12" >
         <div class="room">
           <ul>
-            <li v-for="room in rooms" v-bind:key="room.id">
-              <router-link :to="{ name: 'loby', params: { id: room.id }}">
+            <li v-for="room in rooms" v-bind:key="room['.key']" >
+              <router-link :to="{ name: 'loby', params: { id: room['.key'] }}">
                 <div class="listroom col-md-3" v-bind:class="room.status">
                   <h3>{{ room.name }}</h3>
                   <div class="details">
                     <div class="player1">
-                      <p>Andrew Jovian</p>
+                      <p>{{room.players.player1.username}}</p>
                     </div>
                     <p>VS</p>
                     <div class="player2">
-                      <p>Yosa</p>
+                      <p>{{room.players.player2.username}}</p>
                     </div>
                   </div>
                 </div>
@@ -58,18 +95,44 @@
 </template>
 
 <script>
+import {db} from '../firebase'
+
+const usersRef = db.ref('users')
+const roomsRef = db.ref('rooms')
+
 export default {
   name: 'Room',
+  firebase: {
+    users: usersRef,
+    rooms: roomsRef
+  },
   data: function () {
     return {
-      rooms: [
-        {id: 1, name: 'Room 1', status: 'war'},
-        {id: 2, name: 'Room 2', status: 'on'},
-        {id: 3, name: 'Room 3', status: 'war'},
-        {id: 4, name: 'Room 4', status: 'off'},
-        {id: 5, name: 'Room 5', status: 'war'},
-        {id: 6, name: 'Room 6', status: 'war'}
-      ]
+      // rooms: [
+      //   {id: 1, name: 'Room 1', status: 'war'},
+      //   {id: 2, name: 'Room 2', status: 'on'},
+      //   {id: 3, name: 'Room 3', status: 'war'},
+      //   {id: 4, name: 'Room 4', status: 'off'},
+      //   {id: 5, name: 'Room 5', status: 'war'},
+      //   {id: 6, name: 'Room 6', status: 'war'}
+      // ],
+      newRoom: {
+        name: '',
+        target: '',
+        status: 'on',
+        players: {
+          player1: {
+            username: localStorage.getItem('username'),
+            clicked: 0,
+            isReady: 0
+          },
+          player2: {
+            username: '',
+            clicked: 0,
+            isReady: 0
+          }
+        }
+      }
     }
   },
   computed: {
@@ -82,6 +145,28 @@ export default {
     this.$store.dispatch('getActiveUser')
   },
   methods: {
+    addRoom () {
+      roomsRef.push(this.newRoom)
+        .then((response) => {
+          alert('room added')
+          console.log('ini response- ', response)
+        })
+    },
+    joinRoom (room) {
+      console.log('ini room', room)
+      const user = localStorage.getItem('username')
+      if (room.players.player1.username === user ||
+        room.players.player2.username === user) {
+        alert(`Kamu sudah ada di dalam room`)
+      } else if (room.players.player2.username !== '') {
+        alert('Room full')
+      } else {
+        room.players.player2.username = user
+        const editRoom = {...room}
+        delete editRoom['.key']
+        roomsRef.child(room['.key']).set(editRoom)
+      }
+    }
   }
 }
 </script>
