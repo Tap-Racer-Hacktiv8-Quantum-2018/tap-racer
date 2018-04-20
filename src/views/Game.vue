@@ -1,5 +1,6 @@
 <template>
   <div class="game">
+    {{activeRoom}}
     <h1 class="title">Tap Racer</h1>
     <p>Tap terus supaya menang !</p>
     <p class="score">{{ score }}</p>
@@ -10,8 +11,17 @@
 </template>
 
 <script>
+import {db} from '../firebase'
+
+const usersRef = db.ref('users')
+const roomsRef = db.ref('rooms')
+
 export default {
   name: 'Game',
+  firebase: {
+    users: usersRef,
+    rooms: roomsRef
+  },
   data: function () {
     return {
       score: 0
@@ -19,7 +29,43 @@ export default {
   },
   methods: {
     tapButton: function () {
-      this.score += 1
+      
+      const user = localStorage.getItem('username')
+      if (this.activeRoom.players.player1.username === user) {
+        this.activeRoom.players.player1.clicked++
+        this.score = this.activeRoom.players.player1.clicked
+      } else if (this.activeRoom.players.player2.username === user) {
+        this.activeRoom.players.player2.clicked++
+        this.score = this.activeRoom.players.player2.clicked
+      }
+      console.log(this.activeRoom.players.player2.clicked)
+      const editRoom = {...this.activeRoom}
+      delete editRoom['.key']
+      roomsRef.child(this.activeRoom['.key']).set(editRoom)
+      
+      if (this.activeRoom.players.player1.clicked >= this.activeRoom.target) {
+        alert('player 1 win')
+        this.activeRoom.winner = this.activeRoom.players.player1.username
+      } else if (this.activeRoom.players.player2.clicked >= this.activeRoom.target) {
+        alert('player 2 win')
+        this.activeRoom.winner = this.activeRoom.players.player2.username
+      }
+
+      if(winner !== '') {
+        alert(`Game is over! the winner is ${this.activeRoom.winner}`)
+      }
+    }
+  },
+  computed: {
+    activeRoom: function () {
+      let idRoom = 'room1'
+      let thisroom
+      this.rooms.forEach(room => {
+        if (room['.key'] === idRoom) {
+          thisroom = room
+        }
+      })
+      return thisroom
     }
   }
 }

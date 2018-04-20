@@ -19,7 +19,8 @@ export default new Vuex.Store({
   state: {
     users: [],
     rooms: [],
-    activeUsers: []
+    activeUsers: [],
+    activeRoom: ''
   },
   getters: {
     getUser: function (state) {
