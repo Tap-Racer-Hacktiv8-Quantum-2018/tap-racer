@@ -1,29 +1,58 @@
 <template>
   <div class="container">
-    <div class="room">
-      <div class="headerroom">
-        <h2 class="left-header">Create room</h2>
-        <h2 class="right-header">hi, jono</h2>
+    <div class="headerroom">
+      <h2 class="left-header">Create room</h2>
+      <h2 class="right-header">hi, jono</h2>
+    </div>
+    <div class="row">
+      <div class="col-md-9 col-12" >
+        <div class="room">
+          <ul>
+            <li v-for="room in rooms" v-bind:key="room.id">
+              <router-link :to="{ name: 'loby', params: { id: room.id }}">
+                <div class="listroom col-md-3" v-bind:class="room.status">
+                  <h3>{{ room.name }}</h3>
+                  <div class="details">
+                    <div class="player1">
+                      <p>Andrew Jovian</p>
+                    </div>
+                    <p>VS</p>
+                    <div class="player2">
+                      <p>Yosa</p>
+                    </div>
+                  </div>
+                </div>
+              </router-link>
+            </li>
+            <div class="clear"></div>
+          </ul>
+        </div>
       </div>
-      <ul>
-        <li v-for="room in rooms" v-bind:key="room.id">
-          <router-link :to="{ name: 'loby', params: { id: room.id }}">
-            <div class="listroom col-md-3" v-bind:class="room.status">
-              <h3>{{ room.name }}</h3>
-              <div class="details">
-                <div class="player1">
-                  <p>Andrew Jovian</p>
-                </div>
-                <p>VS</p>
-                <div class="player2">
-                  <p>Yosa</p>
-                </div>
+      <div class="col-md-3 col-6">
+        <div class="activeuser">
+          <h3><span> Active User </span></h3>
+          <div class="tablescore">
+            <div class="table-title">
+              <div class="thead">
+                Username
+              </div>
+              <div class="thead">
+                Status
               </div>
             </div>
-          </router-link>
-        </li>
-        <div class="clear"></div>
-      </ul>
+            <div class="table-body" v-for="(user, index) in activeUsers" :key="index">
+              <div class="thead">
+                {{user.username}}
+              </div>
+              <div class="thead">
+                {{user.status}}
+              </div>
+              <div class="thead">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -42,6 +71,17 @@ export default {
         {id: 6, name: 'Room 6', status: 'war'}
       ]
     }
+  },
+  computed: {
+    activeUsers: function () {
+      return this.$store.getters.getActiveUser
+    }
+  },
+  created: function () {
+    this.$store.dispatch('getUser')
+    this.$store.dispatch('getActiveUser')
+  },
+  methods: {
   }
 }
 </script>
@@ -114,4 +154,39 @@ export default {
   .off {
     background: grey;
   }
+
+  .activeuser {
+  padding: 5px;
+  background-color: whitesmoke;
+  border: 10px solid transparent;
+  -webkit-border-image: url(https://www.w3schools.com/cssref/border.png) 30 round;
+  -o-border-image: url(https://www.w3schools.com/cssref/border.png) 30 round;
+  border-image: url(https://www.w3schools.com/cssref/border.png) 30 round;
+}
+.table-title {
+  border-bottom: 1px solid black;
+  background-color: rgba(253, 185, 11, 0.7);
+  align-items: center;
+  font-weight: bold;
+  padding-bottom: 10px;
+  padding-top:  10px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+.table-title {
+  display: grid;
+  grid-template-columns: 50px auto;
+}
+
+.table-body {
+  display: grid;
+  grid-template-columns: 50px auto;
+  padding: 5px;
+}
+
+span {
+  text-shadow: 2px 2px 2px grey;
+  font-size: 23px;
+}
+
 </style>
