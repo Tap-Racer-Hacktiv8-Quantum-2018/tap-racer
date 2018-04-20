@@ -98,6 +98,7 @@ export default {
         name: '',
         target: '',
         status: 'on',
+        winner: '',
         players: {
           player1: {
             username: localStorage.getItem('username'),
@@ -228,6 +229,14 @@ export default {
   .player1 > p, .player2 > p {
     line-height: 5px;
   }
+  .true {
+    background: red;
+    color: white;
+  }
+  .flase {
+    background: green;
+    color: white;
+  }
   .war {
     border: 2px solid red;
     background: white;
@@ -243,9 +252,9 @@ export default {
     border: 2px solid grey;
     background: lightgreen
   }
-  .off {
+  /* .off {
     background: grey;
-  }
+  } */
 
   .activeuser {
   padding: 5px;

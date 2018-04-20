@@ -1,7 +1,7 @@
 <template>
   <div class="game">
-    <h1 class="title">Tap-Racer</h1>
-    <p>Keep Tapping till you win!</p>
+    <h1 class="title">Tap Racer</h1>
+    <p>Tap terus supaya menang !</p>
     <p class="score">{{ score }}</p>
     <div class="btnwrap">
       <button v-on:click="tapButton"><i class="fas fa-hand-pointer"></i></button>
@@ -23,8 +23,18 @@ export default {
   },
   data: function () {
     return {
-      score: 0
+      score: 0,
+      id: this.$route.params.id,
+      roomname: ''
     }
+  },
+  created () {
+    this.rooms.forEach(room => {
+      if (room['.key'] === this.id) {
+        console.log('room')
+        this.roomname = room.name
+      }
+    })
   },
   methods: {
     tapButton: function () {
@@ -48,14 +58,14 @@ export default {
         this.activeRoom.winner = this.activeRoom.players.player2.username
       }
 
-      // if(winner !== '') {
-      //   alert(`Game is over! the winner is ${this.activeRoom.winner}`)
-      // }
+      if (this.activeRoom.winner !== '') {
+        alert(`Game is over! the winner is ${this.activeRoom.winner}`)
+      }
     }
   },
   computed: {
     activeRoom: function () {
-      let idRoom = 'room1'
+      let idRoom = this.id
       let thisroom
       this.rooms.forEach(room => {
         if (room['.key'] === idRoom) {

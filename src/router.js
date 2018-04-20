@@ -21,7 +21,7 @@ export default new Router({
       component: Loby
     },
     {
-      path: '/game',
+      path: '/game/:id',
       name: 'game',
       component: Game
     },
