@@ -18,11 +18,15 @@ console.log('rooms', rooms)
 export default new Vuex.Store({
   state: {
     users: [],
-    rooms: []
+    rooms: [],
+    activeUsers: []
   },
   getters: {
     getUser: function (state) {
       return state.users
+    },
+    getActiveUser: function (state) {
+      return state.activeUsers
     }
   },
   mutations: {
@@ -36,12 +40,25 @@ export default new Vuex.Store({
       // users.on('value', function (snapshot) {
       // })
       state.users = payload
+    },
+    getActiveUser: function (state, payload) {
+      state.activeUsers.push(payload)
     }
   },
   actions: {
     getUser: function (context) {
       users.on('value', function (snapshot) {
         context.commit('getUser', snapshot.val())
+      })
+    },
+    getActiveUser: function (context) {
+      users.on('value', function (snapshot) {
+        snapshot.forEach(data => {
+          if (data.val().status === 'active') {
+            console.log(data.val())
+            context.commit('getActiveUser', data.val())
+          }
+        })
       })
     }
   }

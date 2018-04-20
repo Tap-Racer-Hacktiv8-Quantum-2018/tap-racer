@@ -40,7 +40,7 @@
                 Status
               </div>
             </div>
-            <div class="table-body" v-for="(user, index) in getUser" :key="index">
+            <div class="table-body" v-for="(user, index) in activeUsers" :key="index">
               <div class="thead">
                 {{user.username}}
               </div>
@@ -69,23 +69,23 @@ export default {
         {id: 4, name: 'Room 4', status: 'off'},
         {id: 5, name: 'Room 5', status: 'war'},
         {id: 6, name: 'Room 6', status: 'war'}
-      ],
-      activeUsers: []
+      ]
     }
   },
   computed: {
-    getUser: function () {
-      return this.$store.getters.getUser
+    activeUsers: function () {
+      return this.$store.getters.getActiveUser
     }
   },
   created: function () {
     this.$store.dispatch('getUser')
+    this.$store.dispatch('getActiveUser')
     this.loginUser()
   },
   methods: {
     loginUser: function () {
       console.log('getusergetter==', this.getUser)
-      let data = this.getUser
+      let data = this.$store.state.users
       for (let value in data) {
         console.log(value)
         if (value.status === 'active') {
