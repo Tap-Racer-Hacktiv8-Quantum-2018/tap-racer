@@ -213,7 +213,12 @@ export default {
     margin-left: 20px;
     margin-right: 20px;
   }
-  .room {
+  .roomlist{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start
   }
 
   li {
