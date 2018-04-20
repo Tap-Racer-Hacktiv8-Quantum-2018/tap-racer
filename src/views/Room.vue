@@ -24,11 +24,11 @@
           </div>
         </div>
         <!-- <button type="button" class="header right-header btn btn-danger" @click="logOut">Log Out</button> -->
-        <h2 class="right-header">Hi, Jono</h2>
+        <h2 class="right-header">Hi, {{username}}</h2>
       </div>
       <div class="row">
         <div class="roomlist col-md-9 col-12" >
-          <li v-for="room in rooms" v-bind:key="room['.key']" >
+          <li v-for="room in rooms" v-bind:key="room['.key']" @click="joinRoom(room)">
             <router-link :to="{ name: 'loby', params: { id: room['.key'] }}">
               <div class="listroom" v-bind:class="room.status">
                 <h3>{{ room.name }}</h3>
@@ -94,6 +94,7 @@ export default {
   },
   data: function () {
     return {
+      username: localStorage.getItem('username'),
       newRoom: {
         name: '',
         target: '',
@@ -136,14 +137,17 @@ export default {
       const user = localStorage.getItem('username')
       if (room.players.player1.username === user ||
         room.players.player2.username === user) {
-        alert(`Kamu sudah ada di dalam room`)
+        return true;
       } else if (room.players.player2.username !== '') {
         alert('Room full')
+        this.$router.push( '/room' );
+        return false;
       } else {
         room.players.player2.username = user
         const editRoom = {...room}
         delete editRoom['.key']
         roomsRef.child(room['.key']).set(editRoom)
+        return true;
       }
     }
   }

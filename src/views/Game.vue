@@ -39,30 +39,30 @@ export default {
   },
   methods: {
     tapButton: function () {
-      this.score++
       this.color += 5
       const user = localStorage.getItem('username')
-      if (this.activeRoom.players.player1.username === user) {
-        this.activeRoom.players.player1.clicked++
-        this.score = this.activeRoom.players.player1.clicked
-      } else if (this.activeRoom.players.player2.username === user) {
-        this.activeRoom.players.player2.clicked++
-        this.score = this.activeRoom.players.player2.clicked
-      }
+      
       console.log(this.activeRoom.players.player2.clicked)
       const editRoom = {...this.activeRoom}
       delete editRoom['.key']
       roomsRef.child(this.activeRoom['.key']).set(editRoom)
-      if (this.activeRoom.players.player1.clicked >= this.activeRoom.target) {
-        alert('player 1 win')
-        this.activeRoom.winner = this.activeRoom.players.player1.username
-      } else if (this.activeRoom.players.player2.clicked >= this.activeRoom.target) {
-        alert('player 2 win')
-        this.activeRoom.winner = this.activeRoom.players.player2.username
-      }
-
       if (this.activeRoom.winner !== '') {
         alert(`Game is over! the winner is ${this.activeRoom.winner}`)
+        this.$router.push( '/room' );
+      } else if (this.activeRoom.players.player1.clicked >= this.activeRoom.target) {
+        alert(`${this.activeRoom.players.player1.username} win`)
+        this.activeRoom.winner = this.activeRoom.players.player1.username
+      } else if (this.activeRoom.players.player2.clicked >= this.activeRoom.target) {
+        alert(`${this.activeRoom.players.player2.username} win`)
+        this.activeRoom.winner = this.activeRoom.players.player2.username
+      } else {
+        if (this.activeRoom.players.player1.username === user) {
+          this.activeRoom.players.player1.clicked++
+          this.score = this.activeRoom.players.player1.clicked
+        } else if (this.activeRoom.players.player2.username === user) {
+          this.activeRoom.players.player2.clicked++
+          this.score = this.activeRoom.players.player2.clicked
+        }
       }
     }
   },
