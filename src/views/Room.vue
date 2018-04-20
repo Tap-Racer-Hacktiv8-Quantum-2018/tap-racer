@@ -80,20 +80,8 @@ export default {
   created: function () {
     this.$store.dispatch('getUser')
     this.$store.dispatch('getActiveUser')
-    this.loginUser()
   },
   methods: {
-    loginUser: function () {
-      console.log('getusergetter==', this.getUser)
-      let data = this.$store.state.users
-      for (let value in data) {
-        console.log(value)
-        if (value.status === 'active') {
-          console.log('active=', value)
-          this.activeUsers.push(value)
-        }
-      }
-    }
   }
 }
 </script>
