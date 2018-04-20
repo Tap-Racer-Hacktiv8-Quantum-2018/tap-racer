@@ -2,6 +2,7 @@
   <div class="container">
     <div class="headerroom">
       <h2 class="left-header">Create room</h2>
+      <button type="button" class="right-header btn btn-danger" @click="logOut">Log Out</button>
       <h2 class="right-header">hi, jono</h2>
     </div>
     <div class="row">
@@ -58,6 +59,10 @@
 </template>
 
 <script>
+import {db} from '../firebase'
+
+const users = db.ref('users')
+
 export default {
   name: 'Room',
   data: function () {
@@ -72,6 +77,11 @@ export default {
       ]
     }
   },
+  firebase: function () {
+    return {
+      dataUser: users
+    }
+  },
   computed: {
     activeUsers: function () {
       return this.$store.getters.getActiveUser
@@ -82,6 +92,27 @@ export default {
     this.$store.dispatch('getActiveUser')
   },
   methods: {
+    logOut: function () {
+      let username = localStorage.getItem('username')
+      let check = false
+      let dataUser = ''
+      this.dataUser.forEach(value => {
+        if (value.username === username) {
+          console.log('username exist')
+          check = true
+          dataUser = value
+        }
+      })
+      console.log('user fo logout==', dataUser)
+      if (check === true) {
+        users.child(dataUser['.key']).update({
+          status: 'inactive'
+        }).then(() => {
+          localStorage.removeItem('username')
+          this.$router.push({name: 'index'})
+        })
+      }
+    }
   }
 }
 </script>
@@ -103,6 +134,8 @@ export default {
   }
   .right-header {
     float: right;
+    margin-left: 20px;
+    margin-right: 20px;
   }
   .room {
   }

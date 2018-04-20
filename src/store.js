@@ -26,7 +26,7 @@ export default new Vuex.Store({
       return state.users
     },
     getActiveUser: function (state) {
-      return state.activeUsers
+      return state.activeUsers[0]
     }
   },
   mutations: {
@@ -40,7 +40,11 @@ export default new Vuex.Store({
       state.users = payload
     },
     getActiveUser: function (state, payload) {
+      state.activeUsers = []
       state.activeUsers.push(payload)
+    },
+    clearActiveUser: function (state) {
+      state.activeUsers = []
     }
   },
   actions: {
@@ -51,12 +55,14 @@ export default new Vuex.Store({
     },
     getActiveUser: function (context) {
       users.on('value', function (snapshot) {
+        let active = []
         snapshot.forEach(data => {
           if (data.val().status === 'active') {
             console.log(data.val())
-            context.commit('getActiveUser', data.val())
+            active.push(data.val())
           }
         })
+        context.commit('getActiveUser', active)
       })
     }
   }
