@@ -28,7 +28,6 @@ export default {
   },
   methods: {
     tapButton: function () {
-      
       const user = localStorage.getItem('username')
       if (this.activeRoom.players.player1.username === user) {
         this.activeRoom.players.player1.clicked++
@@ -41,7 +40,6 @@ export default {
       const editRoom = {...this.activeRoom}
       delete editRoom['.key']
       roomsRef.child(this.activeRoom['.key']).set(editRoom)
-      
       if (this.activeRoom.players.player1.clicked >= this.activeRoom.target) {
         alert('player 1 win')
         this.activeRoom.winner = this.activeRoom.players.player1.username
@@ -50,9 +48,9 @@ export default {
         this.activeRoom.winner = this.activeRoom.players.player2.username
       }
 
-      if(winner !== '') {
-        alert(`Game is over! the winner is ${this.activeRoom.winner}`)
-      }
+      // if(winner !== '') {
+      //   alert(`Game is over! the winner is ${this.activeRoom.winner}`)
+      // }
     }
   },
   computed: {
