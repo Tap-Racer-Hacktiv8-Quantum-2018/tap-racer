@@ -6,7 +6,7 @@
       <div class="main col-8">
         <div class="bodyRoom">
         <h1>Welcome to room {{ roomname }}, {{name}}</h1>
-        <table class="playerTable table table-hover">
+        <!-- <table class="playerTable table table-hover">
           <thead>
             <th>Player</th>
             <th>Name</th>
@@ -15,7 +15,7 @@
             <td>Player {{index + 1}}</td>
             <td>{{room.players.player1.username}}</td>
           </tr>
-        </table>
+        </table> -->
         <div class="container">
           <button class="btn btn-danger btn-lg">
           <router-link class="btn-start" :to="{ name: 'game', params: { id: id }}">
