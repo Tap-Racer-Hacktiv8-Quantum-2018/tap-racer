@@ -15,7 +15,7 @@
       </li>
     </ul>
     <form class="form-inline my-2 my-lg-0">
-      <button type="button" class="header right-header btn btn-danger" @click="logOut">Log Out</button>
+      <button type="button" class="header right-header btn btn-link" @click="logOut">Log Out</button>
     </form>
   </div>
   </nav>
@@ -60,6 +60,6 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 
 </style>
