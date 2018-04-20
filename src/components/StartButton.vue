@@ -2,6 +2,7 @@
   <div class="start-button">
     <button class="btn btn-danger">
       <router-link class="btn-start" to="/game">
+      <!-- <router-link class="btn-start" :to="{ name: 'game', params: { id: room['.key'] }}"> -->
         Start
       </router-link>
     </button>

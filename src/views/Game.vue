@@ -1,6 +1,7 @@
 <template>
   <div class="game">
     {{activeRoom}}
+    {{ id }}
     <h1 class="title">Tap Racer</h1>
     <p>Tap terus supaya menang !</p>
     <p class="score">{{ score }}</p>
@@ -24,12 +25,21 @@ export default {
   },
   data: function () {
     return {
-      score: 0
+      score: 0,
+      id: this.$route.params.id,
+      roomname: ''
     }
+  },
+  created () {
+    this.rooms.forEach(room => {
+      if (room['.key'] === this.id) {
+        console.log('room')
+        this.roomname = room.name
+      }
+    })
   },
   methods: {
     tapButton: function () {
-      
       const user = localStorage.getItem('username')
       if (this.activeRoom.players.player1.username === user) {
         this.activeRoom.players.player1.clicked++
@@ -42,7 +52,6 @@ export default {
       const editRoom = {...this.activeRoom}
       delete editRoom['.key']
       roomsRef.child(this.activeRoom['.key']).set(editRoom)
-      
       if (this.activeRoom.players.player1.clicked >= this.activeRoom.target) {
         alert('player 1 win')
         this.activeRoom.winner = this.activeRoom.players.player1.username
@@ -51,14 +60,14 @@ export default {
         this.activeRoom.winner = this.activeRoom.players.player2.username
       }
 
-      if(winner !== '') {
+      if (this.activeRoom.winner !== '') {
         alert(`Game is over! the winner is ${this.activeRoom.winner}`)
       }
     }
   },
   computed: {
     activeRoom: function () {
-      let idRoom = 'room1'
+      let idRoom = this.id
       let thisroom
       this.rooms.forEach(room => {
         if (room['.key'] === idRoom) {

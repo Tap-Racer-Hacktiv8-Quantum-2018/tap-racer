@@ -51,6 +51,7 @@
                 <div class="listroom col-md-3" v-bind:class="room.status">
                   <h3>{{ room.name }}</h3>
                   <div class="details">
+                    {{ room.status }}
                     <div class="player1">
                       <p>{{room.players.player1.username}}</p>
                     </div>
@@ -181,7 +182,7 @@ export default {
       })
       console.log('user fo logout==', dataUser)
       if (check === true) {
-        users.child(dataUser['.key']).update({
+        usersRef.child(dataUser['.key']).update({
           status: 'inactive'
         }).then(() => {
           localStorage.removeItem('username')
@@ -252,17 +253,17 @@ export default {
   .player1 > p, .player2 > p {
     line-height: 5px;
   }
-  .war {
+  .true {
     background: red;
     color: white;
   }
-  .on {
+  .flase {
     background: green;
     color: white;
   }
-  .off {
+  /* .off {
     background: grey;
-  }
+  } */
 
   .activeuser {
   padding: 5px;
