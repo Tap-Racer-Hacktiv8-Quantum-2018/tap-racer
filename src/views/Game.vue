@@ -1,8 +1,7 @@
 <template>
   <div class="game">
-    {{activeRoom}}
-    <h1 class="title">Tap Racer</h1>
-    <p>Tap terus supaya menang !</p>
+    <h1 class="title">Tap-Racer</h1>
+    <p>Keep Tapping till you win!</p>
     <p class="score">{{ score }}</p>
     <div class="btnwrap">
       <button v-on:click="tapButton"><i class="fas fa-hand-pointer"></i></button>
@@ -73,9 +72,14 @@ export default {
 
 <style scoped>
 
+  p{
+    font-family: 'Contrail One', cursive;
+    margin-top: 1%;
+  }
+
   .title {
-    font-family: 'Alfa Slab One', cursive;
-    margin-bottom: -1px;
+    font-family: 'Contrail One', cursive;
+    margin-bottom: 1px;
   }
   .score {
     font-size: 100px;
