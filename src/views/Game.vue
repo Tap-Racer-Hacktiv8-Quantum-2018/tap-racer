@@ -1,7 +1,5 @@
 <template>
   <div class="game">
-    {{activeRoom}}
-    {{ id }}
     <h1 class="title">Tap Racer</h1>
     <p>Tap terus supaya menang !</p>
     <p class="score">{{ score }}</p>
@@ -82,9 +80,14 @@ export default {
 
 <style scoped>
 
+  p{
+    font-family: 'Contrail One', cursive;
+    margin-top: 1%;
+  }
+
   .title {
-    font-family: 'Alfa Slab One', cursive;
-    margin-bottom: -1px;
+    font-family: 'Contrail One', cursive;
+    margin-bottom: 1px;
   }
   .score {
     font-size: 100px;

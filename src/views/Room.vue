@@ -1,36 +1,18 @@
 <template>
   <div class="container">
     <div class="headerroom">
-      <button class="left-header"  data-toggle="modal" data-target="#modalCreateRoom">Create room</button>
+      <button class="header left-header" data-toggle="modal" data-target="#modalCreateRoom">Create room</button>
       <div id="modalCreateRoom" class="modal fade" role="dialog">
         <div class="modal-dialog">
           <!-- Modal content-->
           <div class="modal-content">
             <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal">&times;</button>
               <h4 class="modal-title" align="left">Create Room</h4>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
-              <form class="ivu-form ivu-form-label-right">
-                <div class="form-group">
-                  <label class="form-title">Room Name</label>
-                  <div class="form-group-content">
-                    <div class="">
-                      <i class="validate"></i>
-                      <input type="text" placeholder="room name" class="form-control"
-                      v-model="newRoom.name">
-                      </div>
-                    </div>
-                  </div>
-                <div class="form-group">
-                  <label class="form-title">Target</label>
-                  <div class="form-group-content">
-                    <div class="">
-                      <input placeholder="target" v-model="newRoom.target">
-                    </div>
-                  </div>
-                </div>
-              </form>
+              <input type="text" placeholder="room name" class="form-control" v-model="newRoom.name">
+              <input type="text" placeholder="target" class="form-control" v-model="newRoom.target">
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -39,8 +21,8 @@
           </div>
         </div>
       </div>
-      <button type="button" class="right-header btn btn-danger" @click="logOut">Log Out</button>
-      <h2 class="right-header">hi, jono</h2>
+      <button type="button" class="header right-header btn btn-danger" @click="logOut">Log Out</button>
+      <h2 class="right-header">Hi, Jono</h2>
     </div>
     <div class="row">
       <div class="col-md-9 col-12" >
@@ -61,11 +43,15 @@
                     </div>
                   </div>
                 </div>
-              </router-link>
-            </li>
-            <div class="clear"></div>
-          </ul>
-        </div>
+                <p>VS</p>
+                <div class="player2">
+                  <p>{{room.players.player2.username}}</p>
+                </div>
+              </div>
+            </div>
+          </router-link>
+        </li>
+        <div class="clear"></div>
       </div>
       <div class="col-md-3 col-6">
         <div class="activeuser">
@@ -110,14 +96,6 @@ export default {
   },
   data: function () {
     return {
-      // rooms: [
-      //   {id: 1, name: 'Room 1', status: 'war'},
-      //   {id: 2, name: 'Room 2', status: 'on'},
-      //   {id: 3, name: 'Room 3', status: 'war'},
-      //   {id: 4, name: 'Room 4', status: 'off'},
-      //   {id: 5, name: 'Room 5', status: 'war'},
-      //   {id: 6, name: 'Room 6', status: 'war'}
-      // ],
       newRoom: {
         name: '',
         target: '',
@@ -182,7 +160,7 @@ export default {
       })
       console.log('user fo logout==', dataUser)
       if (check === true) {
-        usersRef.child(dataUser['.key']).update({
+        this.users.child(dataUser['.key']).update({
           status: 'inactive'
         }).then(() => {
           localStorage.removeItem('username')
@@ -195,6 +173,10 @@ export default {
 </script>
 
 <style>
+  input{
+    margin: 1% 0%
+  }
+
   .headerroom {
     /* width: 990px; */
     height: 50px;
@@ -202,19 +184,33 @@ export default {
     margin-bottom: 10px;
   }
 
+  .header{
+    font-family: 'Contrail One', cursive
+  }
   .left-header {
     font-size: 20px;
     float: left;
     background: red;
     padding: 10px;
     border-radius: 10px;
+    color: white
   }
   .right-header {
     float: right;
     margin-left: 20px;
     margin-right: 20px;
+    font-family: 'Contrail One', cursive
   }
-  .room {
+  .modal-body{
+    display: flex;
+    flex-direction: column;
+  }
+  .roomlist{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start
   }
 
   li {
@@ -232,10 +228,12 @@ export default {
   .listroom {
     margin: 10px;
     list-style: none;
-    /* width: 300px; */
+    width: 150px;
+    height: 150px;
     min-height: 150px;
     background: orange;
     float: left;
+    border-radius: 5px
     /* margin-right: 10px;
     margin-bottom: 10px; */
   }
@@ -245,10 +243,10 @@ export default {
   }
   .details {
     margin-top: 20px;
-    background: blue;
+    background: lightblue;
     width: 100%;
     padding: 10px;
-    /* height: 50px; */
+    height: 92px;
   }
   .player1 > p, .player2 > p {
     line-height: 5px;
@@ -260,6 +258,21 @@ export default {
   .flase {
     background: green;
     color: white;
+  }
+  .war {
+    border: 2px solid red;
+    background: white;
+    color: black;
+  }
+  .on {
+    border: 2px solid green;
+    background: white;
+    color: black;
+    transition: 0.3s
+  }
+  .on:hover {
+    border: 2px solid grey;
+    background: lightgreen
   }
   /* .off {
     background: grey;
