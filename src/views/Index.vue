@@ -18,7 +18,7 @@
               <input type="password" v-model="password" placeholder="Password">
             </div>
           </div>
-            <button type="button" class="button lgnbtn">Login</button>
+            <button type="button" class="button lgnbtn" @click="login">Login</button>
             <!-- Button trigger modal -->
             <button type="button" class="btn btn-link" data-toggle="modal" data-target="#exampleModalCenter">
               Register
@@ -42,7 +42,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" @click="signup">Register</button>
             </div>
           </div>
         </div>
@@ -75,7 +75,6 @@ export default {
   },
   created: function () {
     this.$store.dispatch('getUser')
-    // this.$store.commit('getUser')
   },
   methods: {
     signup: function () {
@@ -120,13 +119,6 @@ export default {
           console.log('masuk login', value['.key'])
           check = true
           id = value['.key']
-          // swal(
-          //   'Welcome!',
-          //   'Login success!',
-          //   'success'
-          // )
-          // localStorage.setItem('username', this.username)
-          // this.$router.push({name: 'board'})
         }
       })
       console.log('check==', check)

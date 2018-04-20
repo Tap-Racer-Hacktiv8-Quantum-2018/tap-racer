@@ -37,8 +37,6 @@ export default new Vuex.Store({
       state.rooms.push(payload)
     },
     getUser: function (state, payload) {
-      // users.on('value', function (snapshot) {
-      // })
       state.users = payload
     },
     getActiveUser: function (state, payload) {
