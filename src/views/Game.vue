@@ -4,7 +4,7 @@
     <p>Tap terus supaya menang !</p>
     <p class="score">{{ score }}</p>
     <div class="btnwrap">
-      <button v-on:click="tapButton"><i class="fas fa-hand-pointer"></i></button>
+      <button v-bind:style="{'background': 'rgb(255,' + color + ',' + color + ')'}" v-on:click="tapButton"><i class="fas fa-hand-pointer"></i></button>
     </div>
   </div>
 </template>
@@ -25,7 +25,8 @@ export default {
     return {
       score: 0,
       id: this.$route.params.id,
-      roomname: ''
+      roomname: '',
+      color: 0
     }
   },
   created () {
@@ -38,6 +39,8 @@ export default {
   },
   methods: {
     tapButton: function () {
+      this.score++
+      this.color += 5
       const user = localStorage.getItem('username')
       if (this.activeRoom.players.player1.username === user) {
         this.activeRoom.players.player1.clicked++
@@ -104,7 +107,7 @@ export default {
     text-align: center;
     width: 150px;
     height: 150px;
-    background: red;
+    /* background: red; */
     color: white;
   }
 
