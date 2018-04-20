@@ -1,7 +1,7 @@
 <template>
   <div class="start-button">
     <button class="btn btn-danger">
-      <router-link class="btn-start" to="/game">
+      <router-link class="btn-start btn-lg" to="/game">
         Start
       </router-link>
     </button>

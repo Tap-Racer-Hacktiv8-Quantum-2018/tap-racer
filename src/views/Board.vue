@@ -1,12 +1,14 @@
 <template>
-  <div id="board">
-    <div class="row">
-      <div class="col-1 red"></div>
-        <div class="col-1 blue"></div>
-          <div class="col-8 mainbody">
-          <h1>Tap-Racer</h1>
-          <h4>LEADERBOARDS!</h4>
-          <table class="table table-hover">
+  <div>
+    <navbar></navbar>
+    <div id="board">
+      <div class="row">
+        <div class="col-1 red"></div>
+          <div class="col-1 blue"></div>
+            <div class="col-8 mainbody">
+            <h1>Tap-Racer</h1>
+            <h4>LEADERBOARDS!</h4>
+            <table class="table table-hover">
               <thead>
                   <th>No.</th>
                   <th>Username</th>
@@ -19,17 +21,22 @@
                   <td>{{score.win}}</td>
                   <td>{{score.lose}}</td>
                 </tr>
-          </table>
-          </div>
-        <div class="col-1 blue"></div>
-      <div class="col-1 red"></div>
+            </table>
+            </div>
+          <div class="col-1 blue"></div>
+        <div class="col-1 red"></div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import Navbar from '@/components/Navbar'
 export default {
   name: 'board',
+  components: {
+    Navbar
+  },
   data: function () {
     return {
       scoreData: [{

@@ -39,6 +39,7 @@
                   <input type="text" v-model="username" placeholder="Username">
                   <input type="password" v-model="password" placeholder="Password">
                   <input type="password" v-model="confirm" placeholder="Confirm Password">
+                  <p v-if="password !== confirm" class="text-danger">Password don't match!!</p>
               </div>
               <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -132,7 +133,7 @@ export default {
           status: 'active'
         })
         localStorage.setItem('username', this.username)
-        this.$router.push({name: 'board'})
+        this.$router.push({name: 'room'})
       } else {
         swal({
           type: 'error',
@@ -183,10 +184,6 @@ div.indexLogin {
 
 h1, h2, h5, button{
   font-family: 'Contrail One', cursive
-}
-
-.indexLogin{
-    margin-top: 4%;
 }
 
 .lgnbtn{

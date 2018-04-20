@@ -1,69 +1,72 @@
 <template>
-  <div class="container">
-    <div class="headerroom">
-      <button class="header left-header" data-toggle="modal" data-target="#modalCreateRoom">Create room</button>
-      <div id="modalCreateRoom" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-          <!-- Modal content-->
-          <div class="modal-content">
-            <div class="modal-header">
-              <h4 class="modal-title" align="left">Create Room</h4>
-              <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-            <div class="modal-body">
-              <input type="text" placeholder="room name" class="form-control" v-model="newRoom.name">
-              <input type="text" placeholder="target" class="form-control" v-model="newRoom.target">
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              <button class="btn btn-primary" @click="addRoom" data-dismiss="modal">Save</button>
+  <div>
+    <navbar></navbar>
+    <div class="container">
+      <div class="headerroom">
+        <button class="header left-header" data-toggle="modal" data-target="#modalCreateRoom">Create room</button>
+        <div id="modalCreateRoom" class="modal fade" role="dialog">
+          <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <h4 class="modal-title" align="left">Create Room</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+              </div>
+              <div class="modal-body">
+                <input type="text" placeholder="room name" class="form-control" v-model="newRoom.name">
+                <input type="text" placeholder="target" class="form-control" v-model="newRoom.target">
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button class="btn btn-primary" @click="addRoom" data-dismiss="modal">Save</button>
+              </div>
             </div>
           </div>
         </div>
+        <!-- <button type="button" class="header right-header btn btn-danger" @click="logOut">Log Out</button> -->
+        <h2 class="right-header">Hi, Jono</h2>
       </div>
-      <button type="button" class="header right-header btn btn-danger" @click="logOut">Log Out</button>
-      <h2 class="right-header">Hi, Jono</h2>
-    </div>
-    <div class="row">
-      <div class="roomlist col-md-9 col-12" >
-        <li v-for="room in rooms" v-bind:key="room['.key']" >
-          <router-link :to="{ name: 'loby', params: { id: room['.key'] }}">
-            <div class="listroom" v-bind:class="room.status">
-              <h3>{{ room.name }}</h3>
-              <div class="details">
-                <div class="player1">
-                  <p>{{room.players.player1.username}}</p>
-                </div>
-                <p>VS</p>
-                <div class="player2">
-                  <p>{{room.players.player2.username}}</p>
+      <div class="row">
+        <div class="roomlist col-md-9 col-12" >
+          <li v-for="room in rooms" v-bind:key="room['.key']" >
+            <router-link :to="{ name: 'loby', params: { id: room['.key'] }}">
+              <div class="listroom" v-bind:class="room.status">
+                <h3>{{ room.name }}</h3>
+                <div class="details">
+                  <div class="player1">
+                    <p>{{room.players.player1.username}}</p>
+                  </div>
+                  <p>VS</p>
+                  <div class="player2">
+                    <p>{{room.players.player2.username}}</p>
+                  </div>
                 </div>
               </div>
-            </div>
-          </router-link>
-        </li>
-        <div class="clear"></div>
-      </div>
-      <div class="col-md-3 col-6">
-        <div class="activeuser">
-          <h3><span> Active User </span></h3>
-          <div class="tablescore">
-            <div class="table-title">
-              <div class="thead">
-                Username
+            </router-link>
+          </li>
+          <div class="clear"></div>
+        </div>
+        <div class="col-md-3 col-6">
+          <div class="activeuser">
+            <h3><span> Active User </span></h3>
+            <div class="tablescore">
+              <div class="table-title">
+                <div class="thead">
+                  Username
+                </div>
+                <div class="thead">
+                  Status
+                </div>
               </div>
-              <div class="thead">
-                Status
-              </div>
-            </div>
-            <div class="table-body" v-for="(user, index) in activeUsers" :key="index">
-              <div class="thead">
-                {{user.username}}
-              </div>
-              <div class="thead">
-                {{user.status}}
-              </div>
-              <div class="thead">
+              <div class="table-body" v-for="(user, index) in activeUsers" :key="index">
+                <div class="thead">
+                  {{user.username}}
+                </div>
+                <div class="thead">
+                  {{user.status}}
+                </div>
+                <div class="thead">
+                </div>
               </div>
             </div>
           </div>
@@ -74,6 +77,7 @@
 </template>
 
 <script>
+import Navbar from '@/components/Navbar'
 import {db} from '../firebase'
 
 const usersRef = db.ref('users')
@@ -81,6 +85,9 @@ const roomsRef = db.ref('rooms')
 
 export default {
   name: 'Room',
+  components: {
+    Navbar
+  },
   firebase: {
     users: usersRef,
     rooms: roomsRef
@@ -136,27 +143,6 @@ export default {
         const editRoom = {...room}
         delete editRoom['.key']
         roomsRef.child(room['.key']).set(editRoom)
-      }
-    },
-    logOut: function () {
-      let username = localStorage.getItem('username')
-      let check = false
-      let dataUser = ''
-      this.users.forEach(value => {
-        if (value.username === username) {
-          console.log('username exist')
-          check = true
-          dataUser = value
-        }
-      })
-      console.log('user fo logout==', dataUser)
-      if (check === true) {
-        this.users.child(dataUser['.key']).update({
-          status: 'inactive'
-        }).then(() => {
-          localStorage.removeItem('username')
-          this.$router.push({name: 'index'})
-        })
       }
     }
   }

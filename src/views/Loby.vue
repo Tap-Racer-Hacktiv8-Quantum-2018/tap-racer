@@ -1,7 +1,9 @@
 <template>
   <div class="loby">
     <h1>Welcome to room {{ id }}, yosa</h1>
+    <div class="container">
     <StartButton></StartButton>
+    </div>
   </div>
 </template>
 
@@ -21,6 +23,8 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+.container {
+  margin: 100px;
+}
 </style>
