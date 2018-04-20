@@ -107,7 +107,6 @@ export default {
     text-align: center;
     width: 150px;
     height: 150px;
-    /* background: red; */
     color: white;
   }
 
