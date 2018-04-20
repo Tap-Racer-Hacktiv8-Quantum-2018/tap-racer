@@ -47,7 +47,7 @@ export default {
       })
       console.log('user fo logout==', dataUser)
       if (check === true) {
-        this.users.child(dataUser['.key']).update({
+        usersRef.child(dataUser['.key']).update({
           status: 'inactive'
         }).then(() => {
           localStorage.removeItem('username')

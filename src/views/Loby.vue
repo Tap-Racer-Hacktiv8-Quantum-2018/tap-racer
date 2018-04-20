@@ -3,9 +3,13 @@
     <h1>Welcome to room {{ roomname }}, yosa</h1>
     <!-- <StartButton></StartButton> -->
     <!-- <router-link class="btn-start" to="/game"> -->
-    <router-link class="btn-start" :to="{ name: 'game', params: { id: id }}">
-      Start
-    </router-link>
+    <div class="container">
+      <button class="btn btn-danger btn-lg">
+      <router-link class="btn-start" :to="{ name: 'game', params: { id: id }}">
+        Start
+      </router-link>
+      </button>
+    </div>
   </div>
 </template>
 
@@ -49,7 +53,18 @@ export default {
 </script>
 
 <style scoped>
-.container {
-  margin: 100px;
+button {
+  margin-top: 200px;
+}
+.btn-start {
+  padding: 10px 25px;
+  color: white !important;
+  }
+.loby{
+  background-image: url('https://media.giphy.com/media/10LKovKon8DENq/giphy.gif');
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 630px;
+  width: 100%;
 }
 </style>
